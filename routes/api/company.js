@@ -15,7 +15,7 @@ const {
   updateJobById,
   deleteJob,
   getJobStat,
-} = require('../../controllers/company.controller');
+} = require('../../controllers/job.controller');
 
 const ClearbitLogo = require('clearbit-logo');
 
@@ -219,7 +219,9 @@ router.delete('/delete', auth, async (req, res) => {
   }
 });
 
-router.put(
+router.put('/job', createJob);
+
+/*router.put(
   '/job',
   [
     auth,
@@ -276,7 +278,7 @@ router.put(
     res.status(500).send('Server Error');
   }
 }
-);
+);*/
 
 
 

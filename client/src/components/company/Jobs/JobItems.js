@@ -11,7 +11,6 @@ function JobItems({ deleteJob, data }) {
     _id,
     title,
     job_type,
-    posted_date,
     start_date,
     employees_needed,
     description,

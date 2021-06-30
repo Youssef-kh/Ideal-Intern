@@ -60,7 +60,7 @@ const App = ({ match }) => (
       <Route path="/company/profiles" component={companyProfiles} />
       <Route path="/company/Add-Job" component={AddJob} />
       <Route path="/profile/:id" component={ProfilebyID} />
-      <Route path="/edit-trainee-experience" component={editExperience} />
+      <Route path={`${match.url}edit-trainee-experience`} component={editExperience} />
       <Route path="/profile-company/:id" component={companyProfilebyID} />     
       <Route path={`${match.url}group`} component={GroupsViews} />
       <Route path={`${match.url}invitation`} component={invitationsViews} />

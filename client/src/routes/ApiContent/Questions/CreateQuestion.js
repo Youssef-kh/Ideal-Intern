@@ -70,7 +70,7 @@ export class CreateQuestion extends Component {
 
         console.log(formData);
         const config = {
-          headers: {
+          headers: { 
             "content-type": "multipart/form-data"
           }
         };

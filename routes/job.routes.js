@@ -10,7 +10,7 @@ const {
 
 const router = new express.Router();
 
-router.put('/job', createJob);
+router.put('/create', createJob);
 router.get('/showJob', getAllJobs);
 router.get('/stat', getJobStat);
 router.get('/showbyId', getJobById);

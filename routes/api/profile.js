@@ -241,9 +241,9 @@ router.put(
 /*router.post('/experience_edit/:exp_id', auth, async (req, res) => {
   try {
     const trainee = await Trainee.findOne({ user: req.user.id });
-  
+    const experience = trainee.experience;
   if (trainee) {
-     trainee.experience.findOneAndUpdate(
+     experience.findOneAndUpdate(
       { user: req.user.id },
       { $set: trainee },
       { new: true } 
@@ -257,10 +257,11 @@ router.put(
     res.status(500).send('Server Error');
   }
 })*/
-router.post('/experience_edit/:exp_id', auth,  (req, res) => {
-  Trainee.findById(req.user.id)
+ router.post('/experience_edit/:exp_id', auth,  (req, res) => {
+  
+  Trainee.findOne({ user : req.user.id })
     .then((trainee) => {
-      trainee.user = req.user.id;
+      console.log("req.body",req.body);
       trainee.title = req.body.title;
       trainee.company = req.body.company;
       trainee.location = req.body.location;
@@ -269,10 +270,11 @@ router.post('/experience_edit/:exp_id', auth,  (req, res) => {
       trainee.current = req.body.current;
       trainee.description = req.body.description;
 
-      trainee.save().then(() => res.json("Experience Edited!"));
+    trainee.save().then(() => res.json("Experience Edited!"));
+  
     })
     .catch((err) => res.status(400).json("Error: " + err));
-});
+})
 
 // @route    DELETE api/Trainee/experience/:exp_id
 // @desc     Delete experience from Trainee

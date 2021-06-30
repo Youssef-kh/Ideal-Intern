@@ -147,9 +147,12 @@ export const addExperience = formData => async dispatch => {
 };
 export const editExperience = id => async dispatch => {
   try {
+   console.log("id",id);
     const res = await axios.post(
-      `/api/trainee/experience_edit/${id}`
+      `/api/trainee/experience_edit/${id}`, id
+      
     );
+    
 
     dispatch({
       type: UPD_PROF,
@@ -161,7 +164,7 @@ export const editExperience = id => async dispatch => {
       errors.forEach(error =>
         dispatch({
           type: EDIT_TRAINEE_EXPERIENCE_FAIL,
-          payload: error.msg
+          payload: { msg: err.response.statusText, status: err.response.status }
         })
       );
     }

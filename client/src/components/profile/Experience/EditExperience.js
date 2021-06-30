@@ -22,13 +22,13 @@ import {
     message
 } from "antd";
 
-import "../profile_forms/otherFormControls.less";
+import "../profile_forms/otherFormControls.less"; 
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
-class EditExperience extends Component {
+class EditExperience extends Component {  
     state = {
         disabled: false
     };
@@ -47,9 +47,9 @@ class EditExperience extends Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            if (!err) {
+            if (!err) {   
                 // console.log("Received values of form: ", values);
-
+                console.log("values", values);
                 this.props.editExperience(values);
                 this.openNotificationWithIcon("success");
                 this.props.history.push("/social-apps/trainee-profile");

@@ -3,11 +3,11 @@ import { Button, Tag, Icon, Popconfirm, message } from "antd";
 import CircularProgress from "components/CircularProgress/index";
 import moment from "moment";
 import { connect } from "react-redux";
-import { deleteExperience, editExperience } from "../../../appRedux/actions/profile";
+import { deleteExperience } from "../../../appRedux/actions/profile";
 import { Link } from "react-router-dom";
 
 
-function ExperienceItem({ deleteExperience, data, editExperience }) {
+function ExperienceItem({ deleteExperience, data}) {
   const {
     _id,
     desciption,
