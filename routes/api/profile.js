@@ -261,14 +261,17 @@ router.put(
   
   Trainee.findOne({ user : req.user.id })
     .then((trainee) => {
-      console.log("req.body",req.body);
-      trainee.title = req.body.title;
-      trainee.company = req.body.company;
-      trainee.location = req.body.location;
-      trainee.from = req.body.from;
-      trainee.to = req.body.to;
-      trainee.current = req.body.current;
-      trainee.description = req.body.description;
+      trainee.experience.forEach(experience => {
+        if(experience._id.toString() === req.body.experienceId){
+          experience.title = req.body.title;
+          experience.company = req.body.company;
+          experience.location = req.body.location;
+          experience.from = req.body.from;
+          experience.to = req.body.to;
+          experience.current = req.body.current;
+          experience.description = req.body.description;
+        }
+      });
 
     trainee.save().then(() => res.json("Experience Edited!"));
   
@@ -391,5 +394,8 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+
+
 
 module.exports = router;

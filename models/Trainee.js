@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const shortid = require('shortid')
 const TraineeSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -35,6 +35,10 @@ const TraineeSchema = new mongoose.Schema({
   },
   experience: [
     {
+      experienceId:{
+        type: String,
+        default: shortid.generate()
+      },
       title: {
         type: String,
         

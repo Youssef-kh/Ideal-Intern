@@ -40,7 +40,7 @@ class EditExperience extends Component {
     };
     openNotificationWithIcon = type => {
         notification[type]({
-            message: "Experience Editted Successfully"
+            message: "Experience Edited Successfully"
         });
     };
 
@@ -49,13 +49,16 @@ class EditExperience extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {   
                 // console.log("Received values of form: ", values);
-                console.log("values", values);
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                values.experienceId = urlParams.get('experienceId');
                 this.props.editExperience(values);
                 this.openNotificationWithIcon("success");
                 this.props.history.push("/social-apps/trainee-profile");
             }
         });
     };
+
 
     render() {
         const { getFieldDecorator } = this.props.form;

@@ -68,7 +68,7 @@ function ExperienceItem({ deleteExperience, data}) {
         <div className="gx-featured-content-right gx-profile-content-right">
           <h2 className="gx-text-primary gx-mb-1">
             <Button >
-            <Link to="/edit-trainee-experience" >
+            <Link to={"/edit-trainee-experience/?experienceId=" + _id}   >
               <Icon
                 
                 className="gx-text-primary gx-text-truncate gx-mt-sm-auto gx-mb-0 gx-pointer"

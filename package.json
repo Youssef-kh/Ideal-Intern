@@ -25,10 +25,12 @@
   },
   "homepage": "https://github.com/moete/MERN_NETWORK#readme",
   "dependencies": {
+    "@types/react-router-dom": "^5.1.7",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "clearbit-logo": "0.0.1",
+    "concurrently": "^6.1.0",
     "config": "^3.3.3",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -45,17 +47,16 @@
     "mongoose": "^5.12.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
+    "nodemon": "^2.0.7",
     "path": "^0.12.7",
     "react-modal": "^3.12.1",
     "react-router-dom": "^5.2.0",
     "react-select": "^4.3.0",
     "react-view-component": "^1.0.1",
     "request": "^2.88.2",
-    "validation": "0.0.1",
-    "@types/react-router-dom": "^5.1.7",
+    "shortid": "^2.2.16",
     "timeago-react": "^3.0.2",
-    "concurrently": "^6.1.0",
-    "nodemon": "^2.0.7"
+    "validation": "0.0.1"
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7",
