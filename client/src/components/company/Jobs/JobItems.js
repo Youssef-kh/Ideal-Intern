@@ -1,11 +1,11 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Tag, Icon, Popconfirm, message } from "antd";
 import CircularProgress from "components/CircularProgress/index";
 import moment from "moment";
 import { connect } from "react-redux";
 import { deleteJob } from "../../../appRedux/actions/company";
 import { Link } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 function JobItems({ deleteJob, data }) {
   const {
     _id,
@@ -19,8 +19,8 @@ function JobItems({ deleteJob, data }) {
     trainee,
     appliedTrainees
   } = data;
-  const [appliedTraineesNames, setAppliedTraineesNames] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [appliedTraineesNames, setAppliedTraineesNames] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   function confirm(e) {
     console.log(_id);
@@ -28,29 +28,25 @@ function JobItems({ deleteJob, data }) {
 
     message.success("Job deleted");
   }
-  async function getTraineeById(id){
-    
+  async function getTraineeById(id) {
     const trainee = await axios.get("/api/trainee/user/" + id);
     setAppliedTraineesNames(appliedTraineesNames.push(trainee.data.firstName));
-
   }
-  
+
   function cancel(e) {
     console.log(e);
     message.error("Job not deleted");
   }
   useEffect(() => {
-    if(appliedTrainees)
-    {
+    if (appliedTrainees) {
       appliedTrainees.forEach(trainee => {
-        getTraineeById(trainee)
-      });    
+        getTraineeById(trainee);
+      });
     }
- }, []);
- useEffect(() => {
-  setLoading(false)
-
-}, [appliedTraineesNames]);
+  }, []);
+  useEffect(() => {
+    setLoading(false);
+  }, [appliedTraineesNames]);
   return (
     <div className="gx-media gx-featured-item">
       <div className="gx-featured-thumb">
@@ -69,18 +65,16 @@ function JobItems({ deleteJob, data }) {
               />
             </div>
             <div>
-          
-            <span className="gx-media-body gx-ml-1">{location}</span>
+              <span className="gx-media-body gx-ml-1">{location}</span>
             </div>
           </div>
           <div>
-          Applied Trainees :
-          <span className="gx-mb-2">{appliedTrainees? appliedTrainees.length : null}</span> 
-             
+            Applied Trainees :
+            <span className="gx-mb-2">
+              {appliedTrainees ? appliedTrainees.length : null}
+            </span>
           </div>
-<div>
-  {!loading? appliedTraineesNames[0]: <div>Loading..</div> }
-  </div>
+          <div>{!loading ? appliedTraineesNames[0] : <div>Loading..</div>}</div>
           <div className="ant-row-flex">
             <div className="gx-media gx-text-grey gx-mb-1">
               <i
@@ -98,12 +92,12 @@ function JobItems({ deleteJob, data }) {
         <div className="gx-featured-content-right gx-profile-content-right">
           <h2 className="gx-text-primary gx-mb-1">
             <Button>
-            <Link to={"/edit-company-job/?jobId=" + _id} >
-              <Icon
-                className="gx-text-primary gx-text-truncate gx-mt-sm-auto gx-mb-0 gx-pointer"
-                type="edit"
-                theme="twoTone"
-              />
+              <Link to={"/edit-company-job/?jobId=" + _id}>
+                <Icon
+                  className="gx-text-primary gx-text-truncate gx-mt-sm-auto gx-mb-0 gx-pointer"
+                  type="edit"
+                  theme="twoTone"
+                />
               </Link>
             </Button>
           </h2>

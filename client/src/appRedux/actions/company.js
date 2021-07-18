@@ -18,8 +18,6 @@ import {
   ADD_COMPANY_JOB_FAIL,
   EDIT_COMPANY_JOB_FAIL,
   GET_ALL_JOBS
-
-
 } from "../../constants/ActionTypes";
 import setAuthToken from "../../util/setAuthToken";
 
@@ -27,9 +25,7 @@ import setAuthToken from "../../util/setAuthToken";
 export const getAllJobs = () => async dispatch => {
   dispatch({ type: CLEAR_COMPANY });
   try {
-    const res = await axios.get(
-      "/api/company/get-all-jobs"
-    );
+    const res = await axios.get("/api/company/get-all-jobs");
     dispatch({
       type: GET_ALL_JOBS,
       payload: res.data
@@ -46,9 +42,7 @@ export const getAllJobs = () => async dispatch => {
 export const getProfiles = () => async dispatch => {
   dispatch({ type: CLEAR_COMPANY });
   try {
-    const res = await axios.get(
-      "/api/company/profiles"
-    );
+    const res = await axios.get("/api/company/profiles");
     dispatch({
       type: GET_COMPANIES,
       payload: res.data
@@ -64,9 +58,7 @@ export const getProfiles = () => async dispatch => {
 //Get company profile by ID
 export const getProfileById = userId => async dispatch => {
   try {
-    const res = await axios.get(
-      `/api/company/user/${userId}`
-    );
+    const res = await axios.get(`/api/company/user/${userId}`);
     dispatch({
       type: GET_COMPANY,
       payload: res.data
@@ -84,9 +76,7 @@ export const getCurrentcompany = () => async dispatch => {
     setAuthToken(localStorage.token);
   }
   try {
-    const res = await axios.get(
-      "/api/company/user"
-    );
+    const res = await axios.get("/api/company/user");
     //push fl store mtee el redux
     dispatch({
       type: GET_COMPANY,
@@ -101,17 +91,14 @@ export const getCurrentcompany = () => async dispatch => {
 };
 // Create or update profile
 export const createCompany = (
-  formData,   
+  formData,
 
   edit = false
 ) => async dispatch => {
   try {
     console.log(formData);
-    const res = await axios.post(
-      "/api/company/create",
-      formData
-    );
-      
+    const res = await axios.post("/api/company/create", formData);
+
     dispatch({
       type: GET_COMPANY,
       payload: res.data
@@ -147,13 +134,10 @@ export const createCompany = (
 export const deleteAccount = () => async dispatch => {
   if (window.confirm("Are you sure ? This can NOT be undone!")) {
     try {
-      const res = await axios.delete(
-        "/api/company/delete"
-      );
+      const res = await axios.delete("/api/company/delete");
       dispatch({
         type: CLEAR_COMPANY
       });
-      
     } catch (err) {
       dispatch({
         type: COMPANY_ERROR,
@@ -164,9 +148,7 @@ export const deleteAccount = () => async dispatch => {
 };
 export const getGithubRepos = username => async dispatch => {
   try {
-    const res = await axios.get(
-      `/api/company/github/${username}`
-    );
+    const res = await axios.get(`/api/company/github/${username}`);
 
     dispatch({
       type: GET_REPOS,
@@ -195,14 +177,12 @@ export const hideAuthLoader = () => {
   };
 };
 //GET FOLLOWINGS
- export const getFollowings = () => async dispatch => {
+export const getFollowings = () => async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
   try {
-    const res = await axios.get(
-      "/api/users/getfollowing"
-    );
+    const res = await axios.get("/api/users/getfollowing");
 
     dispatch({
       type: GET_FOLLOWINGS,
@@ -210,14 +190,12 @@ export const hideAuthLoader = () => {
     });
   } catch (err) {}
 };
-  export const getFollowers = () => async dispatch => {
+export const getFollowers = () => async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
   try {
-    const res = await axios.get(
-      "/api/users/getfollowers"
-    );
+    const res = await axios.get("/api/users/getfollowers");
 
     dispatch({
       type: GET_FOLLOWERS,
@@ -226,15 +204,11 @@ export const hideAuthLoader = () => {
   } catch (err) {}
 };
 
-
 //ADD JOB
 export const addJob = formData => async dispatch => {
   try {
     console.log(formData);
-    const res = await axios.put(
-      "/api/company/job",
-      formData
-    );
+    const res = await axios.put("/api/company/job", formData);
 
     dispatch({
       type: UPD_COMP,
@@ -253,41 +227,34 @@ export const addJob = formData => async dispatch => {
   }
 };
 
-
-
 //EDIT JOB
 export const editJob = id => async dispatch => {
   try {
-   console.log("id",id);
-    const res = await axios.post(
-      `/api/company/job_edit/${id}`
-      
-    );
-    
+    console.log("id", id);
+    const res = await axios.post(`/api/company/job_edit/${id}`, id);
 
     dispatch({
       type: UPD_COMP,
       payload: res.data
     });
   } catch (err) {
-    const errors = err.response.data.errors;
-    if (errors) {
-      errors.forEach(error =>
-        dispatch({
-          type: EDIT_COMPANY_JOB_FAIL,
-          payload: { msg: err.response.statusText, status: err.response.status }
-        })
-      );
-    }
+    //const errors = err.response.data.errors;
+    console.log("eerrr", err);
+    // if (errors) {
+    //   errors.forEach(error =>
+    //     dispatch({
+    //       type: EDIT_COMPANY_JOB_FAIL,
+    //       payload: { msg: err.response.statusText, status: err.response.status }
+    //     })
+    //   );
+    // }
   }
 };
 
 //DELETE JOB
 export const deleteJob = id => async dispatch => {
   try {
-    const res = await axios.delete(
-      `/api/company/job/${id}`
-    );
+    const res = await axios.delete(`/api/company/job/${id}`);
     dispatch({
       type: UPD_COMP,
       payload: res.data

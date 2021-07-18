@@ -49,10 +49,10 @@ class EditJob extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-       // console.log("Received values of form: ", values);
+        // console.log("Received values of form: ", values);
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        values.jobId = urlParams.get('jobId');
+        values.jobId = urlParams.get("jobId");
         this.props.editJob(values);
         this.openNotificationWithIcon("success");
         this.props.history.push("/social-apps/company-profile");
@@ -74,11 +74,7 @@ class EditJob extends Component {
 
     return (
       <Fragment>
-
-        <Card
-          className="gx-card "
-          title="Edit job"
-        >
+        <Card className="gx-card " title="Edit job">
           <Form onSubmit={this.handleSubmit}>
             <FormItem {...formItemLayout} label="Job Title">
               {getFieldDecorator("title", {
@@ -87,21 +83,25 @@ class EditJob extends Component {
             </FormItem>
             <FormItem {...formItemLayout} label="Job Type" hasFeedback>
               {getFieldDecorator("job_type", {
-                rules: [{ required: false, message: "Please select the job type!" }]
+                rules: [
+                  { required: false, message: "Please select the job type!" }
+                ]
               })(
                 <Select placeholder="Job type ">
-                    <Option value="Ariana">Full Time</Option>
-                    <Option value="Beja">Part Time</Option>
-                    <Option value="Ben Arous">Remote</Option>
-                  </Select> 
+                  <Option value="Full Time">Full Time</Option>
+                  <Option value="Part Time">Part Time</Option>
+                  <Option value="Remote">Remote</Option>
+                </Select>
               )}
             </FormItem>
-            
 
             <FormItem {...formItemLayout} label="employees needed">
               {getFieldDecorator("employees_needed", {
                 rules: [
-                  { required: false, message: "Please input employees needed !" }
+                  {
+                    required: false,
+                    message: "Please input employees needed !"
+                  }
                 ]
               })(<Input placeholder="employees needed" />)}
             </FormItem>
@@ -130,31 +130,31 @@ class EditJob extends Component {
                 rules: [{ required: false, message: "Please input Location!" }]
               })(
                 <Select placeholder="Please select your location">
-                    <Option value="Ariana">Ariana</Option>
-                    <Option value="Beja">Beja</Option>
-                    <Option value="Ben Arous">Ben Arous</Option>
-                    <Option value="Gafsa">Gafsa</Option>
-                    <Option value="Gabes">Gabes</Option>
-                    <Option value="Jendouba">Jendouba</Option>
-                    <Option value="Kairaouen">Kairaouen</Option>
-                    <Option value="Kasserine">Kasserine</Option>
-                    <Option value="Kebili">kebili</Option>
-                    <Option value="Nabeul">Nabeul</Option>
-                    <Option value="Manouba">Manouba</Option>
-                    <Option value="Kef">Kef</Option>
-                    <Option value="Mahdia">Mahdia</Option>
-                    <Option value="Tataouin">Tataouin</Option>
-                    <Option value="Medenin">Medenin</Option>
-                    <Option value="Monastir">Monastir</Option>
-                    <Option value="Bizerte">Bizert</Option>
-                    <Option value="Sfax">Sfax</Option>
-                    <Option value="Sidi Bouzid">Sidi Bouzid</Option>
-                    <Option value="Siliana">Siliana</Option>
-                    <Option value="Soussa">Soussa</Option>
-                    <Option value="Touzeur">Tozeur</Option>
-                    <Option value="Tunis">Tunis</Option>
-                    <Option value="Zaghouen">Zaghouen</Option>
-                  </Select> 
+                  <Option value="Ariana">Ariana</Option>
+                  <Option value="Beja">Beja</Option>
+                  <Option value="Ben Arous">Ben Arous</Option>
+                  <Option value="Gafsa">Gafsa</Option>
+                  <Option value="Gabes">Gabes</Option>
+                  <Option value="Jendouba">Jendouba</Option>
+                  <Option value="Kairaouen">Kairaouen</Option>
+                  <Option value="Kasserine">Kasserine</Option>
+                  <Option value="Kebili">kebili</Option>
+                  <Option value="Nabeul">Nabeul</Option>
+                  <Option value="Manouba">Manouba</Option>
+                  <Option value="Kef">Kef</Option>
+                  <Option value="Mahdia">Mahdia</Option>
+                  <Option value="Tataouin">Tataouin</Option>
+                  <Option value="Medenin">Medenin</Option>
+                  <Option value="Monastir">Monastir</Option>
+                  <Option value="Bizerte">Bizert</Option>
+                  <Option value="Sfax">Sfax</Option>
+                  <Option value="Sidi Bouzid">Sidi Bouzid</Option>
+                  <Option value="Siliana">Siliana</Option>
+                  <Option value="Soussa">Soussa</Option>
+                  <Option value="Touzeur">Tozeur</Option>
+                  <Option value="Tunis">Tunis</Option>
+                  <Option value="Zaghouen">Zaghouen</Option>
+                </Select>
               )}
             </FormItem>
             <FormItem {...formItemLayout} label="Job Description">
