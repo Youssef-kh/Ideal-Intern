@@ -8,7 +8,7 @@ import { Avatar, Button } from "antd";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getCurrentcompany } from "../../../appRedux/actions/company";
-
+import Job from "../../../components/company/Jobs/Index";
 import { friendList } from "./data";
 import { photoList } from "../Wall/data";
 import Friends from "../../../components/company/Friends/index";
@@ -35,6 +35,7 @@ const Company = ({
             <Row>
               <Col xl={16} lg={14} md={14} sm={24} xs={24}>
                 <About Company={Company} />
+                <Job />
                 
               </Col>
 

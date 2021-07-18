@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Job = require('../models/Job');
 const company = require('../models/Company');
+const { body } = require('express-validator');
 
 
 // @route GET api/Job/showJobs
@@ -60,6 +61,7 @@ const createJob = async (req, res) => {
   Job.create(req.body)
     .then(Jobs => res.json({ msg: 'Job added successfully' }))
     .catch(err => res.status(400).json({ error: 'Unable to add this Job' }));
+    console.log('body', body);
 };
 
 // @route GET api/books/:id

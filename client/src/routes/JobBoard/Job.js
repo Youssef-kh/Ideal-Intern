@@ -3,8 +3,13 @@ import { Card, Badge, Button, Collapse } from "react-bootstrap";
 import { notification } from "antd";
 import axios from "axios";
 import { saveAs } from "file-saver";
+import {
+  deleteAccount,
+  getCurrentProfile
+} from "../../appRedux/actions/profile";
+import { connect } from "react-redux";
 
-export default function Job({ job, onClick }) {
+const Job = ({auth: { authUser, user }, job, onClick,companyId })  =>{
   const pdfData = {
     title: job.title,
     location: job.location,
@@ -26,6 +31,15 @@ export default function Job({ job, onClick }) {
     });
   };
 
+  async function applyToJob () {
+    const requestBody = {
+      companyId:companyId,
+      jobId:job.jobId,
+      traineeId:authUser._id
+    }
+    const applyResponse = await axios.post("/api/company/apply",requestBody);
+    console.log(applyResponse.data)
+  }
   const createAndDownloadPdf = () => {
     axios
       .post(BASE_URL, pdfData)
@@ -49,7 +63,7 @@ export default function Job({ job, onClick }) {
             <Card.Title onClick={onClick}>
               {job.title} -{" "}
               <span className="text-muted font-weight-light">
-                {job.company_id.company_name}
+                {job.jobId}
               </span>
             </Card.Title>
             <Card.Subtitle className="text-muted mb-2">
@@ -64,7 +78,7 @@ export default function Job({ job, onClick }) {
               {job.job_type}
             </Badge>
             <Badge variant="secondary" className="mr-2">
-              {job.location}
+              {/* {job.location} */}
             </Badge>
             <Badge variant="secondary" className="mr-2">
               {job.skill}
@@ -75,7 +89,7 @@ export default function Job({ job, onClick }) {
           <img
             className="d-none d-md-block"
             height="50"
-            alt={job.company_id.company_name}
+            alt={job.title}
           />
         </div>
         <Card.Text>
@@ -92,9 +106,10 @@ export default function Job({ job, onClick }) {
               console.log("clicked");
               openNotification();
               createAndDownloadPdf();
+              applyToJob();
             }}
           >
-            Save To Pdf
+            Apply
           </Button>
         </Card.Text>
         <Collapse in={open}>
@@ -106,3 +121,11 @@ export default function Job({ job, onClick }) {
     </Card>
   );
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth, 
+});
+export default connect(mapStateToProps, { getCurrentProfile })(
+  Job
+);
+

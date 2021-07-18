@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const shortid = require('shortid')
 const CompanySchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -29,8 +29,50 @@ const CompanySchema = new mongoose.Schema({
     type: String,
     required: true,
     
-  }
-
+  },
+  job: [
+    {
+      jobId:{
+        type: String,
+        default: shortid.generate()
+      },
+      title: {
+        type: String,
+        
+      },
+      job_type: {
+        
+        type : String,
+        
+      },
+      posted_date: {
+        type: Date,
+        default: Date.now
+      },
+      start_date: {
+        type: Date,
+      },
+      employees_needed: {
+        type: Number
+      },
+      description: {
+        type: String
+      },
+      to: {
+        type: Date,
+       
+      },
+      location : {
+        type : String , 
+      },
+      appliedTrainees:[
+        {
+          type:String,
+          default:"N/A"
+        }
+      ]
+    },
+  ],
 }); 
 
 module.exports = company = mongoose.model('company', CompanySchema);

@@ -18,7 +18,7 @@ const ProfileHeader = ({
   useEffect(() => {
     getCurrentcompany();
   }, []);
-  // const { instagram, linkedin, twitter, facebook, youtube  } = social;
+  //const { instagram, linkedin, twitter, facebook, youtube  } = social;
 
   return (
     <div className="gx-profile-banner">
@@ -33,7 +33,7 @@ const ProfileHeader = ({
                 {user && user.name}
               </h2>
               <p style={{ paddingBottom: "10px" }} className="gx-mb-0 gx-fs-lg">
-                company_name
+                {company.company_name}
               </p>
               <Button type="default">
                 <Link to="/edit-company-profile" className="gx-link">

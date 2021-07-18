@@ -15,10 +15,33 @@ import {
   CLEAR_COMPANY,
   GET_REPOS,
   NO_REPOS,
-  ADD_COMPANY_JOB_FAIL
+  ADD_COMPANY_JOB_FAIL,
+  EDIT_COMPANY_JOB_FAIL,
+  GET_ALL_JOBS
+
 
 } from "../../constants/ActionTypes";
 import setAuthToken from "../../util/setAuthToken";
+
+//Get all Profiles
+export const getAllJobs = () => async dispatch => {
+  dispatch({ type: CLEAR_COMPANY });
+  try {
+    const res = await axios.get(
+      "/api/company/get-all-jobs"
+    );
+    dispatch({
+      type: GET_ALL_JOBS,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: COMPANY_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
 //Get all Profiles
 export const getProfiles = () => async dispatch => {
   dispatch({ type: CLEAR_COMPANY });
@@ -171,7 +194,7 @@ export const hideAuthLoader = () => {
     type: ON_HIDE_LOADER
   };
 };
-
+//GET FOLLOWINGS
  export const getFollowings = () => async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -202,7 +225,10 @@ export const hideAuthLoader = () => {
     });
   } catch (err) {}
 };
-export const createJob = formData => async dispatch => {
+
+
+//ADD JOB
+export const addJob = formData => async dispatch => {
   try {
     console.log(formData);
     const res = await axios.put(
@@ -226,6 +252,37 @@ export const createJob = formData => async dispatch => {
     }
   }
 };
+
+
+
+//EDIT JOB
+export const editJob = id => async dispatch => {
+  try {
+   console.log("id",id);
+    const res = await axios.post(
+      `/api/company/job_edit/${id}`
+      
+    );
+    
+
+    dispatch({
+      type: UPD_COMP,
+      payload: res.data
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error =>
+        dispatch({
+          type: EDIT_COMPANY_JOB_FAIL,
+          payload: { msg: err.response.statusText, status: err.response.status }
+        })
+      );
+    }
+  }
+};
+
+//DELETE JOB
 export const deleteJob = id => async dispatch => {
   try {
     const res = await axios.delete(

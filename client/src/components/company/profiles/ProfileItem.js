@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { Avatar, Tabs, Card, Col, Icon, Row, Popconfirm, message } from "antd";
 const ProfileItem = ({ followUser, unfollowUser, company }) => {
   const {
-    user: { _id, name, avatar },
+    user: { _id, avatar },
     company_name,
     company_status
   } = company;

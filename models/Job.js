@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 mongoose.Promise = global.Promise ;
 
 let Schema = mongoose.Schema
@@ -29,16 +29,13 @@ const JobSchema = new Schema({
   },
   company_id: {
     type: Schema.Types.ObjectId,
-    ref: 'company',
-    required: true
+    ref: 'company'
+    
  },
   to: {
     type: Date,
    
   },
-  title : {
-    type : String 
-  } ,
   location : {
     type : String , 
     required : true
@@ -48,4 +45,4 @@ const JobSchema = new Schema({
 
 
 
-module.exports = Job = mongoose.model('job', JobSchema);
+module.exports = Job = mongoose.model('job', JobSchema);*/

@@ -1,24 +1,29 @@
-import React, { Component, useEffect,useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Avatar, Popover } from "antd";
 import { userSignOut } from "appRedux/actions/Auth";
 import { Link } from "react-router-dom";
 import { getCurrentProfile } from "../../appRedux/actions/profile";
+import { getCurrentcompany } from "../../appRedux/actions/company";
+
 
 const UserInfo = ({
   getCurrentProfile,
   userSignOut,
   auth: { authUser },
   profile: { profile, loader },
+  getCurrentcompany
+
 
 }) => {
-    const [typeOfUser , setTypeOfUser] = useState()
+  const [typeOfUser, setTypeOfUser] = useState()
   useEffect(() => {
-    getCurrentProfile();
+    getCurrentcompany();
     setTypeOfUser(localStorage.getItem('typeOfUser'))
     
   }, []);
   
+
 
   return (
     <Popover
@@ -26,18 +31,29 @@ const UserInfo = ({
       placement="bottomRight"
       content={
         <ul className="gx-user-popover">
-          {typeOfUser === 'yakra' ?(
+          {typeOfUser === 'yakra' ? (
             <Link to="/social-apps/trainee-profile">
-            <li>My trainee profile</li>
-          </Link>
-          ):(
-          <Link to="/social-apps/company-profile">
-          <li>My company profile</li>
-         </Link>
-       )}
-          <Link to="/profile/profiles" className="gx-link">
-            <li>Connections</li>
-          </Link>
+              <li>My trainee profile</li>
+            </Link>
+
+
+          ) : (
+            <Link to="/social-apps/company-profile">
+              <li>My company profile</li>
+            </Link>
+
+
+          )}
+          {typeOfUser === 'yakra' ? (
+            <Link to="/profile/profiles" className="gx-link">
+              <li>Connections</li>
+            </Link>
+          ) : (
+            <Link to="/company/profiles" className="gx-link">
+              <li>Connections</li>
+            </Link>
+          )}
+
 
           <li onClick={() => userSignOut()}>Logout</li>
         </ul>
@@ -53,6 +69,6 @@ const mapStateToProps = state => ({
   profile: state.profile,
   company: state.company
 });
-export default connect(mapStateToProps, { getCurrentProfile, userSignOut })(
+export default connect(mapStateToProps, { getCurrentProfile, getCurrentcompany, userSignOut })(
   UserInfo
 );

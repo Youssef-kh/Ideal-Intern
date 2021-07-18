@@ -28,6 +28,9 @@ import editCompanyProfile from "../components/company/CompanyProfileForm/EditPro
 import companyProfilebyID from "../components/company/profiles/ProfilebyID";
 import AddJob from "../components/company/CompanyProfileForm/AddJob";
 import editExperience from "../components/profile/Experience/EditExperience";
+import editEducation from "../components/profile/Education/EditEducation";
+import EditJob from "../components/company/Jobs/EditJob";
+
 
 const App = ({ match }) => (
   <div className="gx-main-content-wrapper">
@@ -61,6 +64,8 @@ const App = ({ match }) => (
       <Route path="/company/Add-Job" component={AddJob} />
       <Route path="/profile/:id" component={ProfilebyID} />
       <Route path={`${match.url}edit-trainee-experience`} component={editExperience} />
+      <Route path={`${match.url}edit-trainee-education`} component={editEducation} />
+      <Route path={`${match.url}edit-company-job`} component={EditJob} />
       <Route path="/profile-company/:id" component={companyProfilebyID} />     
       <Route path={`${match.url}group`} component={GroupsViews} />
       <Route path={`${match.url}invitation`} component={invitationsViews} />

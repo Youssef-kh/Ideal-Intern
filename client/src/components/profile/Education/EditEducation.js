@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import CircularProgress from "components/CircularProgress/index";
 import { connect } from "react-redux";
-import { addEducation } from "../../../appRedux/actions/profile";
+import { editEducation } from "../../../appRedux/actions/profile";
+
 import {
   Button,
   Card,
@@ -21,13 +22,14 @@ import {
   message
 } from "antd";
 
-import "./otherFormControls.less";
+import "../profile_forms/otherFormControls.less"; 
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
-class AddEducation extends Component {
+
+class EditEducation extends Component {
   state = {
     disabled: false
   };
@@ -39,7 +41,7 @@ class AddEducation extends Component {
   };
   openNotificationWithIcon = type => {
     notification[type]({
-      message: "Education Added Successfully"
+      message: "Education edited Successfully"
     });
   };
 
@@ -48,8 +50,10 @@ class AddEducation extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // console.log("Received values of form: ", values);
-
-        this.props.addEducation(values);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        values.educationId = urlParams.get('educationId');
+        this.props.editEducation(values);
         this.openNotificationWithIcon("success");
         this.props.history.push("/social-apps/trainee-profile");
       }
@@ -70,11 +74,6 @@ class AddEducation extends Component {
 
     return (
       <Fragment>
-        <PageHeader
-          className="gx-card"
-          onBack={() => this.props.history.push("/social-apps/trainee-profile")}
-          title="Add Your Education"
-        />
 
         <Card
           className="gx-card "
@@ -161,7 +160,7 @@ class AddEducation extends Component {
   }
 }
 
-const WrappedAddEducation = Form.create()(AddEducation);
+const WrappedEditEducation = Form.create()(EditEducation);
 const mapStateToProps = state => ({
   authUser: state.auth,
   profile: state.profile.profile,
@@ -169,4 +168,4 @@ const mapStateToProps = state => ({
   alertMessage: state.profile.alertMessage,
   showMessage: state.profile.showMessage
 });
-export default connect(mapStateToProps, { addEducation })(WrappedAddEducation);
+export default connect(mapStateToProps, { editEducation })(WrappedEditEducation);

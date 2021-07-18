@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import CircularProgress from "components/CircularProgress/index";
 import { connect } from "react-redux";
-import { addJob } from "../../../appRedux/actions/company";
+import { editJob } from "../../../appRedux/actions/company";
 
 import {
   Button,
@@ -19,17 +19,17 @@ import {
   Input,
   Icon,
   AutoComplete,
-  message,
-  InputNumber
+  message
 } from "antd";
 
-import "./otherFormControls.less";
+import "../CompanyProfileForm/otherFormControls.less";
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
-class AddJob extends Component {
+
+class EditJob extends Component {
   state = {
     disabled: false
   };
@@ -41,7 +41,7 @@ class AddJob extends Component {
   };
   openNotificationWithIcon = type => {
     notification[type]({
-      message: "Job Added Successfully"
+      message: "Job Edited Successfully"
     });
   };
 
@@ -49,9 +49,11 @@ class AddJob extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
-
-        this.props.addJob(values);
+       // console.log("Received values of form: ", values);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        values.jobId = urlParams.get('jobId');
+        this.props.editJob(values);
         this.openNotificationWithIcon("success");
         this.props.history.push("/social-apps/company-profile");
       }
@@ -72,27 +74,22 @@ class AddJob extends Component {
 
     return (
       <Fragment>
-        <PageHeader
-          className="gx-card"
-          onBack={() => this.props.history.push("/social-apps/company-profile")}
-          title="Add A Job"
-        />
 
         <Card
           className="gx-card "
-          title="Add title for the job"
+          title="Edit job"
         >
           <Form onSubmit={this.handleSubmit}>
             <FormItem {...formItemLayout} label="Job Title">
               {getFieldDecorator("title", {
-                rules: [{ required: true, message: "Please input Title!" }]
+                rules: [{ required: true, message: "Please input Job Title!" }]
               })(<Input placeholder="job title" />)}
             </FormItem>
             <FormItem {...formItemLayout} label="Job Type" hasFeedback>
               {getFieldDecorator("job_type", {
                 rules: [{ required: false, message: "Please select the job type!" }]
               })(
-                <Select placeholder="Please select your location">
+                <Select placeholder="Job type ">
                     <Option value="Ariana">Full Time</Option>
                     <Option value="Beja">Part Time</Option>
                     <Option value="Ben Arous">Remote</Option>
@@ -106,7 +103,7 @@ class AddJob extends Component {
                 rules: [
                   { required: false, message: "Please input employees needed !" }
                 ]
-              })(<InputNumber placeholder="employees needed" />)}
+              })(<Input placeholder="employees needed" />)}
             </FormItem>
             <Form.Item {...formItemLayout} label="from">
               {getFieldDecorator("start_date", {
@@ -186,7 +183,7 @@ class AddJob extends Component {
   }
 }
 
-const WrappedAddJob = Form.create()(AddJob);
+const WrappedEditJob = Form.create()(EditJob);
 const mapStateToProps = state => ({
   authUser: state.auth,
   company: state.company.company,
@@ -194,4 +191,4 @@ const mapStateToProps = state => ({
   alertMessage: state.company.alertMessage,
   showMessage: state.company.showMessage
 });
-export default connect(mapStateToProps, { addJob })(WrappedAddJob);
+export default connect(mapStateToProps, { editJob })(WrappedEditJob);

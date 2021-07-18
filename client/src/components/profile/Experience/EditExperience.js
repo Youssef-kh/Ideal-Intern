@@ -194,5 +194,5 @@ const mapStateToProps = state => ({
     showMessage: state.profile.showMessage
 });
 export default connect(mapStateToProps, { editExperience })(
-    WrappedEditExperience
+    WrappedEditExperience 
 );

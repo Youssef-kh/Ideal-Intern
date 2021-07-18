@@ -8,10 +8,11 @@ import AboutItem from "./AboutItem";
 const TabPane = Tabs.TabPane;
 
 const About = ({
-  company /*auth: { authUser }, company: { company, loader } */
+  auth: { authUser, user },
+  company: { company, loader }
 }) => {
 
-
+ 
 
   return (
     <Widget
@@ -21,7 +22,7 @@ const About = ({
       <Tabs defaultActiveKey="1">
         <TabPane tab="Overview" key="1">
           <div className="gx-mb-2">
-            <h2>company.company_name</h2>
+            <h2>{company.activity}</h2>
             <Row>
               <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                 <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
@@ -30,20 +31,11 @@ const About = ({
                       className={`icon icon-company gx-fs-xlxl gx-text-blue`}
                     />
                   </div>
-                </div>
-              </Col>
-              <Col xl={8} lg={12} md={12} sm={12} xs={24}>
-                
-              </Col>
-              <Col xl={8} lg={12} md={12} sm={12} xs={24}>
-                <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
-                  <div className="gx-mr-3">
-                    <i className={`icon icon-home gx-fs-xlxl gx-text-blue`} />
+                  <div>
+                  <h6 className="gx-mb-1 gx-text-grey">Company Name</h6>
+                    <p className="gx-mb-0">{company.company_name}</p>
                   </div>
-                  <div className="gx-media-body">
-                    <h6 className="gx-mb-1 gx-text-grey">Location</h6>
-                    <p className="gx-mb-0">company.location</p>
-                  </div>
+                  
                 </div>
               </Col>
               <Col xl={8} lg={12} md={12} sm={12} xs={24}>
@@ -52,11 +44,23 @@ const About = ({
                     <i className={`fas fa-code gx-fs-xlxl gx-text-blue`} />
                   </div>
                   <div className="gx-media-body">
-                    <h6 className="gx-mb-1 gx-text-grey">activity</h6>
-                    <p className="gx-mb-0">company.company_activity.join(",")</p>
+                    <h6 className="gx-mb-1 gx-text-grey">website adress</h6>
+                    <p className="gx-mb-0">{company.website_adress}</p>
                   </div>
                 </div>
               </Col>
+              <Col xl={8} lg={12} md={12} sm={12} xs={24}>
+                <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
+                  <div className="gx-mr-3">
+                    <i className={`icon icon-home gx-fs-xlxl gx-text-blue`} />
+                  </div>
+                  <div className="gx-media-body">
+                    <h6 className="gx-mb-1 gx-text-grey">Location</h6>
+                    <p className="gx-mb-0">{company.location}</p>
+                  </div>
+                </div>
+              </Col>
+              
             </Row>
           </div>
         </TabPane>
@@ -70,4 +74,4 @@ const mapStateToProps = state => ({
   company: state.company
 });
 
-export default connect(null, {})(About);
+export default connect(mapStateToProps, {})(About);

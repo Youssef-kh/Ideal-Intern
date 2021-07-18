@@ -27,7 +27,7 @@ const userImageList = [
 export const aboutList = [
   {
     id: 1,
-    title: 'Works at',
+    title: 'Company Name',
     icon: 'company',
     userList: '',
     desc: ['G-axon Tech Pvt. Ltd.']
@@ -48,10 +48,10 @@ export const aboutList = [
   },
   {
     id: 4,
-    title: 'Lives in London',
-    icon: 'home',
+    title: 'Adress',
+    icon: 'adress',
     userList: '',
-    desc: ['From Switzerland']
+    desc: ['From Tunisia']
   },
   {
     id: 5,

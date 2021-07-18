@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 
 function EducationItem({ data }) {
   const {
-    _id,
     schoollogo,
     desciption,
     school,

@@ -67,7 +67,7 @@ function EducationItem({ deleteEducation, data }) {
         <div className="gx-featured-content-right gx-profile-content-right">
           <h2 className="gx-text-primary gx-mb-1">
             <Button>
-            <Link to={"/edit-profile-Education/?educationId=" + _id} >
+            <Link to={"/edit-trainee-education/?educationId=" + _id} >
               <Icon
                 className="gx-text-primary gx-text-truncate gx-mt-sm-auto gx-mb-0 gx-pointer"
                 type="edit"

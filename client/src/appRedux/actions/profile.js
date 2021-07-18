@@ -16,7 +16,9 @@ import {
   CLEAR_PROFILE,
   GET_REPOS,
   NO_REPOS,
-  EDIT_TRAINEE_EXPERIENCE_FAIL
+  EDIT_TRAINEE_EXPERIENCE_FAIL,
+  EDIT_TRAINEE_EDUCATION_FAIL
+
 } from "../../constants/ActionTypes";
 import setAuthToken from "../../util/setAuthToken";
 //Get all trainees
@@ -145,6 +147,8 @@ export const addExperience = formData => async dispatch => {
     }
   }
 };
+
+//EDIT EXPERIENCE
 export const editExperience = id => async dispatch => {
   try {
    console.log("id",id);
@@ -170,6 +174,8 @@ export const editExperience = id => async dispatch => {
     }
   }
 };
+
+//ADD EDUCATION
 export const addEducation = formData => async dispatch => {
   try {
     console.log(formData);
@@ -194,8 +200,8 @@ export const addEducation = formData => async dispatch => {
     }
   }
 };
-//DELETE EXPERIENCE
 
+//DELETE EXPERIENCE
 export const deleteExperience = id => async dispatch => {
   try {
     const res = await axios.delete(
@@ -212,6 +218,34 @@ export const deleteExperience = id => async dispatch => {
     });
   }
 };
+
+//EDIT EDUCATION
+export const editEducation = id => async dispatch => {
+  try {
+   console.log("id",id);
+    const res = await axios.post(
+      `/api/trainee/education_edit/${id}`, id
+      
+    );
+    
+
+    dispatch({
+      type: UPD_PROF,
+      payload: res.data
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error =>
+        dispatch({
+          type: EDIT_TRAINEE_EDUCATION_FAIL,
+          payload: { msg: err.response.statusText, status: err.response.status }
+        })
+      );
+    }
+  }
+};
+
 //DELETE EDUCATION
 
 export const deleteEducation = id => async dispatch => {

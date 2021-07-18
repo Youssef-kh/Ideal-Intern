@@ -1,11 +1,11 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { Button, Tag, Icon, Popconfirm, message } from "antd";
 import CircularProgress from "components/CircularProgress/index";
 import moment from "moment";
 import { connect } from "react-redux";
-import { deleteEducation } from "../../../appRedux/actions/company";
+import { deleteJob } from "../../../appRedux/actions/company";
 import { Link } from "react-router-dom";
-
+import axios from "axios"
 function JobItems({ deleteJob, data }) {
   const {
     _id,
@@ -14,26 +14,47 @@ function JobItems({ deleteJob, data }) {
     start_date,
     employees_needed,
     description,
-    company_id,
     to,
-    title,
-    location
+    location,
+    trainee,
+    appliedTrainees
   } = data;
+  const [appliedTraineesNames, setAppliedTraineesNames] = useState([])
+  const [loading, setLoading] = useState(true)
+
   function confirm(e) {
     console.log(_id);
     deleteJob(_id);
 
     message.success("Job deleted");
   }
+  async function getTraineeById(id){
+    
+    const trainee = await axios.get("/api/trainee/user/" + id);
+    setAppliedTraineesNames(appliedTraineesNames.push(trainee.data.firstName));
 
+  }
+  
   function cancel(e) {
     console.log(e);
     message.error("Job not deleted");
   }
+  useEffect(() => {
+    if(appliedTrainees)
+    {
+      appliedTrainees.forEach(trainee => {
+        getTraineeById(trainee)
+      });    
+    }
+ }, []);
+ useEffect(() => {
+  setLoading(false)
+
+}, [appliedTraineesNames]);
   return (
     <div className="gx-media gx-featured-item">
       <div className="gx-featured-thumb">
-        <img className="gx-rounded-lg" src={title} alt="..." />
+        {/* {<img className="gx-rounded-lg" src={} alt="..." />} */}
       </div>
       <div className="gx-media-body gx-featured-content">
         <div className="gx-featured-content-left">
@@ -46,9 +67,20 @@ function JobItems({ deleteJob, data }) {
               <i
                 className={`icon icon-location gx-fs-lg gx-mr-2 gx-d-inline-flex gx-vertical-align-middle`}
               />
-              <span className="gx-media-body gx-ml-1">{location}</span>
+            </div>
+            <div>
+          
+            <span className="gx-media-body gx-ml-1">{location}</span>
             </div>
           </div>
+          <div>
+          Applied Trainees :
+          <span className="gx-mb-2">{appliedTrainees? appliedTrainees.length : null}</span> 
+             
+          </div>
+<div>
+  {!loading? appliedTraineesNames[0]: <div>Loading..</div> }
+  </div>
           <div className="ant-row-flex">
             <div className="gx-media gx-text-grey gx-mb-1">
               <i
@@ -66,7 +98,7 @@ function JobItems({ deleteJob, data }) {
         <div className="gx-featured-content-right gx-profile-content-right">
           <h2 className="gx-text-primary gx-mb-1">
             <Button>
-            <Link to="/edit-company-job" >
+            <Link to={"/edit-company-job/?jobId=" + _id} >
               <Icon
                 className="gx-text-primary gx-text-truncate gx-mt-sm-auto gx-mb-0 gx-pointer"
                 type="edit"

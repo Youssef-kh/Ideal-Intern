@@ -5,7 +5,7 @@ import JobItems from "./JobItems";
 
 const Job = ({ company }) => {
   const data = company.job;
-  console.log(company);
+  console.log(job);
 
   return (
     <Widget styleName="gx-card-profile">
@@ -21,5 +21,6 @@ const Job = ({ company }) => {
     </Widget>
   );
 };
+
 
 export default connect(null, {})(Job);

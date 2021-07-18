@@ -5,6 +5,9 @@ const TraineeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
   },
+  avatar: {
+    type: String,
+  },
   firstName: {
     type: String, 
     required: true,
@@ -69,6 +72,10 @@ const TraineeSchema = new mongoose.Schema({
   ],
   education: [
     {
+      educationId:{
+        type: String,
+        default: shortid.generate()
+      },
       school: {
         type: String,
        

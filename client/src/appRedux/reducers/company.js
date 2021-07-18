@@ -27,7 +27,9 @@ import {
     CREATE_COMPANY_PROFILE_SUCCESS,
     UPDATE_COMPANY_PROFILE_SUCCESS,
     CREATE_COMPANY_PROFILE_FAIL,
-    UPDATE_COMPANY_PROFILE_FAIL
+    UPDATE_COMPANY_PROFILE_FAIL,
+    ADD_COMPANY_JOB_FAIL,
+    CREATE_COMPANY_JOB_SUCCESS
 
   } from "../../constants/ActionTypes";
   
@@ -56,14 +58,7 @@ import {
           ...state,
           followers: payload
         };
-  
-        case GET_COMPANY:
-          return{
-            ...state,
-            company:payload,
-            loader:false,
-            initURL:"/social-apps/company-profile"
-          };
+      case GET_COMPANIES:
       case UPD_COMP:
         return {
           ...state,
@@ -106,8 +101,15 @@ import {
           alertMessage: payload,
           showMessage: true,
           loader: false,
-          initURL: "/create-profile"
+          initURL: "/create-company-profile"
         };
+        case ADD_COMPANY_JOB_FAIL:
+        return {
+          ...state,
+          alertMessage: payload,
+          showMessage: true,
+          loader: false
+        }
       case CLEAR_COMPANY:
         return {
           ...state,

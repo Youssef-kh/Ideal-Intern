@@ -5,6 +5,7 @@ import JobItems from "./JobItems";
 
 const Job = ({ auth: { authUser }, company: { company, loader } }) => {
   const data = company.job;
+  console.log(data);
 
   return (
     <Widget styleName="gx-card-profile">
@@ -25,4 +26,4 @@ const mapStateToProps = state => ({
   company: state.company
 });
 
-export default connect(mapStateToProps, {})(Education);
+export default connect(mapStateToProps, {})(Job);

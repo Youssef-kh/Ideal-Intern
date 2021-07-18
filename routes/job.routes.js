@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const {
   getAllJobs,
   getJobById,
@@ -17,4 +17,4 @@ router.get('/showbyId', getJobById);
 router.patch('/updateJob/:id', updateJobById);
 router.delete('/deleteJob/:id', deleteJob);
 
-module.exports = router;
+module.exports = router;*/

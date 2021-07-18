@@ -6,14 +6,13 @@ import {
   createProfile,
   getCurrentProfile
 } from "../../../appRedux/actions/profile";
-
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import CircularProgress from "components/CircularProgress/index";
 import {
   Button,
   DatePicker,
   Space,
-  Card,
-  Form,
+  Card, 
   Icon,
   notification,
   Row,
@@ -27,16 +26,37 @@ import {
   Switch,
   Upload,
   AutoComplete,
-  message
+  message,
+  Form
 } from "antd";
 
-import "./otherFormControls.less";
+
+
+import "./otherFormControls.less"; 
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
+const RadioGroup = Radio.Group; 
 const AutoCompleteOption = AutoComplete.Option;
+
+function getBase64(img, callback) {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+}
+
+function beforeUpload(file) {
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  if (!isJpgOrPng) {
+    message.error('You can only upload JPG/PNG file!');
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('Image must smaller than 2MB!');
+  }
+  return isJpgOrPng && isLt2M;
+}
 class CreateProfile extends Component {
   state = {
     confirmDirty: false,
@@ -97,6 +117,21 @@ class CreateProfile extends Component {
     }
     this.setState({ autoCompleteResult });
   };
+  handleChange = info => {
+    if (info.file.status === 'uploading') {
+      this.setState({ loading: true });
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, imageUrl =>
+        this.setState({
+          imageUrl,
+          loading: false,
+        }),
+      );
+    }
+  };
 
   render() {
     const { showMessage, loader, alertMessage } = this.props;
@@ -119,10 +154,33 @@ class CreateProfile extends Component {
     function onChange(date, dateString) {
       console.log(date, dateString);
     }
+    const { loading, imageUrl } = this.state;
+    const uploadButton = (
+      <div>
+        {loading ? <LoadingOutlined /> : <PlusOutlined />}
+        <div style={{ marginTop: 8 }}>Upload</div>
+      </div>
+    );
     return (
       <Card className="gx-card" title="Create Your Profile As A Trainee">
         <div>
           <Form onSubmit={this.handleSubmit}>
+          <FormItem {...formItemLayout} label="Trainee's picture" hasFeedback>
+            {getFieldDecorator("avatar")}
+          <Upload
+        name="avatar"
+        listType="picture-card"
+        className="avatar-uploader"
+        showUploadList={false}
+        beforeUpload={beforeUpload}
+        onChange={this.handleChange}
+      >
+        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+      </Upload>
+          </FormItem>
+          
+          
+      
             <FormItem {...formItemLayout} label="First name" hasFeedback>
               {getFieldDecorator("firstName", {
                 rules: [

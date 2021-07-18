@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const {
   getAllCompanies,
   getCompanyById,
@@ -15,4 +15,4 @@ router.get('/showbyId', getCompanyById);
 router.patch('/updatecompany/:id', updateCompanyById);
 router.delete('/deletecompany/:id', deleteCompany);
 
-module.exports = router;
+module.exports = router;*/

@@ -349,6 +349,30 @@ router.put(
     }
   }
 );
+// @route    EDIT api/Trainee/education_edit/:edu_id
+// @desc     EDIT education from Trainee
+// @access   Private
+router.post('/education_edit/:edu_id', auth,  (req, res) => {
+  
+  Trainee.findOne({ user : req.user.id })
+    .then((trainee) => {
+      trainee.education.forEach(education => {
+        if(education._id.toString() === req.body.educationId){
+          education.school = req.body.school;
+          education.degree = req.body.degree;
+          education.fieldofstudy = req.body.fieldofstudy;
+          education.from = req.body.from;
+          education.to = req.body.to;
+          education.current = req.body.current;
+          education.description = req.body.description;
+        }
+      });
+
+    trainee.save().then(() => res.json("Education Edited!"));
+  
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+})
 // @route    DELETE api/Trainee/education/:edu_id
 // @desc     Delete education from Trainee
 // @access   Private

@@ -3,23 +3,42 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const Company = require('../../models/Company');
 const User = require('../../models/User');
-const Job = require('../../models/Job');
+/* const Job = require('../../models/Job'); */
 const { check, validationResult } = require('express-validator');
 const axios = require('axios');
 const config = require('config');
 const request = require('request');
-const {
+const mongoose = require('mongoose');
+/*const {
   getAllJobs,
   getJobById,
   createJob,
   updateJobById,
   deleteJob,
   getJobStat,
-} = require('../../controllers/job.controller');
+} = require('../../controllers/job.controller');*/
 
 const ClearbitLogo = require('clearbit-logo');
 
-
+// @route    GET api/company/get-all-jobs
+// @desc     Get current users company profile
+// @access   Private
+router.get('/get-all-jobs',auth, async (req, res) => {
+  try {
+    await Company
+    .find()
+    .then(function (companies) {
+      if (!companies) {
+        return res.status(404).json({ msg: 'Companies empty.' });
+      }
+      res.json(companies);
+    })
+    .catch((err) => (results = err));
+    } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 // @route    GET api/profile/company
 // @desc     Get current users company profile
 // @access   Private
@@ -219,25 +238,24 @@ router.delete('/delete', auth, async (req, res) => {
   }
 });
 
-router.put('/job', createJob);
+//router.post('/job', createJob);
 
-/*router.put(
+router.put(
   '/job',
   [
     auth,
     [
-      check('title', 'title is required').notEmpty(),
-      check('job_type', 'job type is required')
-      .notEmpty()
-      .custom((value, { req }) => (req.body.to ? value < req.body.to : true)),
+      check('title', 'Title is required').notEmpty(),
+      check('job_type', 'job type is required').notEmpty(),
+     
     ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
-    if(!errors.isEmpty()) {
-      return res.status(400).json({errors: errors.array() });
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
-    
+
     const {
       title,
       job_type,
@@ -245,7 +263,6 @@ router.put('/job', createJob);
       start_date,
       employees_needed,
       description,
-      company_id,
       to
     } = req.body;
 
@@ -256,34 +273,84 @@ router.put('/job', createJob);
       start_date: start_date,
       employees_needed: employees_needed,
       description: description,
-      company_id: company_id,
       to: to
     };
     try {
-      newJob= new Job({
-        title,
-      job_type,
-      posted_date,
-      start_date,
-      employees_needed,
-      description,
-      company_id,
-      to
-      });
-    await newjob.save();
-
-    res.json(company);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+      const company = await Company.findOne({ user: req.user.id });
+      company.job.unshift(newJob);
+      console.log(newJob);
+      await company.save();
+      res.json(company);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
   }
-}
-);*/
+);
 
 
+// @route    EDIT api/Trainee/job_edit/:job_id
+// @desc     EDIT education from Trainee
+// @access   Private
+router.post('/Job_edit/:jb_d', auth,  (req, res) => {
+  
+  Company.findOne({ user : req.user.id }) 
+    .then((company) => {
+      company.job.forEach(job => {
+        if(job._id.toString() === req.body.jobId){
+          job.title = req.body.title;
+          job.job_type = req.body.job_type;
+          job.posted_date = req.body.posted_date;
+          job.start_date = req.body.start_date;
+          job.employees_needed = req.body.employees_needed;
+          job.to = req.body.to;
+          job.description = req.body.description;
+        }
+      });
 
+    company.save().then(() => res.json("Job Edited!"));
+  
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+})
+// @route    DELETE api/company/Job/:job_id
+// @desc     Delete job from company
+// @access   Private
 
+router.delete('/Job/:job_id', auth, async (req, res) => {
+  try {
+    const foundCompany = await Company.findOne({ user: req.user.id });
+    foundCompany.job = foundCompany.job.filter(
+      (job) => job._id.toString() !== req.params.job_id
+    );
+    await foundCompany.save();
+    return res.status(200).json(foundCompany);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ msg: 'Server error' });
+  }
+});
 
+// @route    POST api/company/apply
+// @desc     Apply trainee to job
+// @access   Private
+router.post('/apply', auth,  (req, res) => {
+  const traineeId = req.body.traineeId;
+  const companyId = req.body.companyId;
+  const jobId = req.body.jobId;
+    Company.findOne({ user : companyId }) 
+    .then((company) => {
+      company.job.forEach(job => {
+        if(job.jobId === jobId){
+          job.appliedTrainees.push(traineeId) 
+        }
+      });
+
+    company.save().then(() => res.json("Job Edited!"));
+  
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+ })
 
 
 module.exports = router;

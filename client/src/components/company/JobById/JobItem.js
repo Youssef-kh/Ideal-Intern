@@ -6,14 +6,12 @@ import { connect } from "react-redux";
 
 function JobItem({ data }) {
   const {
-    _id,
     title,
     job_type,
     posted_date,
     start_date,
     employees_needed,
     description,
-    company_id,
     to,
     title,
     location
@@ -22,14 +20,14 @@ function JobItem({ data }) {
   return (
     <div className="gx-media gx-featured-item">
       <div className="gx-featured-thumb">
-        <img className="gx-rounded-lg" src={title} alt="..." />
+        {/* <img className="gx-rounded-lg" src={} alt="..." /> */}
       </div>
       <div className="gx-media-body gx-featured-content">
         <div className="gx-featured-content-left">
           <Tag className="gx-rounded-xs gx-text-uppercase" color="#06BB8A">
             {job_type}
           </Tag>
-          <h3 className="gx-mb-2">{employees_needed}</h3>
+          <h3 className="gx-mb-2">{title}</h3>
           <div className="ant-row-flex">
             <div className="gx-media gx-text-grey gx-mb-1">
               <i
