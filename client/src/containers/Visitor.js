@@ -47,7 +47,7 @@ function Visitor() {
         {jobs ? (
           jobs.map((job, index) => {
             return (
-              <div key={index}>
+              <div key={index} style={{ margin: "1rem" }}>
                 <Card jobs={job} />
               </div>
             );

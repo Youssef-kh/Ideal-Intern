@@ -66,7 +66,7 @@ export default function RecipeReviewCard({ jobs }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-      <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" color="textSecondary" component="p">
           JOBS
         </Typography>
         <IconButton
