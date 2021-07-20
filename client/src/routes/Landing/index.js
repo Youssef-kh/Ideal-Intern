@@ -1,9 +1,9 @@
 import React from "react";
-import signIn from "../../containers/SignIn";
+import visitor from "../../containers/Visitor";
 
 class Landing extends React.Component {
   render() {
-    return <signIn />;
+    return <visitor />;
   }
 }
 export default Landing;   

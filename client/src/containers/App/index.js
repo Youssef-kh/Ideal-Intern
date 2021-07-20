@@ -26,6 +26,7 @@ import {
   NAV_STYLE_DEFAULT_HORIZONTAL,
   NAV_STYLE_INSIDE_HEADER_HORIZONTAL
 } from "../../constants/ThemeSetting";
+import Visitor from "../Visitor";
 
 const RestrictedRoute = ({ component: Component, authUser, ...rest }) => (
   <Route
@@ -36,7 +37,7 @@ const RestrictedRoute = ({ component: Component, authUser, ...rest }) => (
       ) : (
         <Redirect
           to={{
-            pathname: "/signin",
+            pathname: "/visitor",
             state: { from: props.location }
           }}
         />
@@ -108,7 +109,7 @@ class App extends Component {
 
     if (location.pathname === "/") {
       if (authUser === null) {
-        return <Redirect to={"/signin"} />;
+        return <Redirect to={"/visitor"} />;
       } else if (initURL === "" || initURL === "/" || initURL === "/signin") {
         return <Redirect to={"/question/question-list"} />;
       } else {
@@ -129,6 +130,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/visitor" component={Visitor} />
             <RestrictedRoute
               path={`${match.url}`}
               authUser={authUser}

@@ -55,7 +55,10 @@ const UserInfo = ({
           )}
 
 
-          <li onClick={() => userSignOut()}>Logout</li>
+          <li onClick={() => {
+            localStorage.clear()
+            userSignOut()
+          }}>Logout</li>
         </ul>
       }
       trigger="click"
