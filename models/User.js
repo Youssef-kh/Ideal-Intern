@@ -11,6 +11,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  avatar: {
+    type: String,
+    default:
+      "//www.gravatar.com/avatar/e2dad77d2b542486f4435bade75c1739?s=200&r=pg&d=mm",
+  },
   typeOfUser: {
     type: String,
     default: "yakra",
@@ -29,5 +34,3 @@ const UserSchema = new mongoose.Schema({
   following: [{ type: ObjectId, ref: "User" }],
 });
 module.exports = User = mongoose.model("user", UserSchema);
-
-

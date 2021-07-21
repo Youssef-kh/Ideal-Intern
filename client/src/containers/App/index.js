@@ -107,7 +107,6 @@ class App extends Component {
       initURL
     } = this.props;
 
-    console.log("auth user", authUser);
     if (location.pathname === "/") {
       if (authUser === null) {
         return <Redirect to={"/visitor"} />;
