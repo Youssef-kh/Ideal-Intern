@@ -46,7 +46,6 @@ export default (state = INIT_STATE, action) => {
       localStorage.setItem("typeOfUser", payload.user.typeOfUser);
       //  localStorage.setItem("email", payload.token);
 
-
       return {
         ...state,
         isAuthenticated: true,
@@ -87,6 +86,7 @@ export default (state = INIT_STATE, action) => {
       localStorage.removeItem("password");
       localStorage.removeItem("token");
       localStorage.removeItem("typeOfUser");
+      localStorage.removeItem("user_id");
       return {
         ...state,
         token: null,
@@ -101,6 +101,7 @@ export default (state = INIT_STATE, action) => {
       localStorage.removeItem("password");
       localStorage.removeItem("token");
       localStorage.removeItem("typeOfUser");
+      localStorage.removeItem("user_id");
       return {
         ...state,
         token: null,
@@ -129,7 +130,6 @@ export default (state = INIT_STATE, action) => {
       localStorage.setItem("password", payload.user.password);
       localStorage.setItem("token", payload.token);
       localStorage.setItem("typeOfUser", payload.user.typeOfUser);
-      
 
       localStorage.setItem("user_id", payload.user._id);
       // localStorage.setItem("user_id", payload.user);

@@ -53,11 +53,7 @@ const ProfileItem = ({ followUser, unfollowUser, company }) => {
             </Link>
           }
           title={<p>{company_name}</p>}
-          description={
-            <p>
-              {company_status}
-            </p>
-          }
+          description={<p>{company_status}</p>}
         />
       </Card>
     </Col>

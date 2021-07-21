@@ -6,9 +6,9 @@ import Widget from "components/Widget/index";
 import CircularProgress from "components/CircularProgress/index";
 import GroupList from "./GroupList";
 import { connect } from "react-redux";
-import { getCurrentProfile } from "../../../appRedux/actions/profile"; 
+import { getCurrentProfile } from "../../../appRedux/actions/profile";
 
-const Question = (props, profile) => (
+const Question = props => (
   <Col>
     <Card>
       <div>
@@ -181,7 +181,11 @@ const User = ({ profile }) => (
       <div>
         <div className="gx-profileon">
           <div className="gx-profileon-thumb gx-profileon-thumb-htctrcrop">
-            <img src={profile ? profile.user.avatar : ""} alt=""></img>
+            <img
+              src="https://www.gravatar.com/avatar/1c718d0021c07927241294be36b6d54b?s=200&r=pg&d=mm"
+              alt=""
+            ></img>
+            {console.log("image ", profile)}
           </div>
           <div
             className="gx-profileon-content"
@@ -197,7 +201,7 @@ const User = ({ profile }) => (
           <ul className="gx-follower-list">
             <li>
               <span className="gx-follower-title">2k+</span>
-              <span>Followers</span>
+              <span>Followers </span>
             </li>
             <li>
               <span className="gx-follower-title">847</span>
@@ -360,12 +364,11 @@ export class AllPosts extends Component {
     };
   }
   componentDidMount() {
-    
     axios
       .get("/question/")
       .then(response => {
         this.setState({ questions: response.data });
-        console.log(this.state.questions)
+        console.log(this.state.questions);
       })
       .catch(error => {
         console.log(error);
@@ -388,7 +391,7 @@ export class AllPosts extends Component {
       .catch(error => {
         console.log(error);
       });
-      console.log(this.state.questions)
+    console.log(this.state.questions);
     fetch(
       "https://api.stackexchange.com/2.2/search/advanced/?" +
         "site=" +
@@ -430,7 +433,7 @@ export class AllPosts extends Component {
   }
 
   questionList() {
-    console.log(this.state.questions)
+    console.log(this.state.questions);
     let filtredPosts = this.state.questions.filter(currentquestion => {
       return (
         currentquestion.title
@@ -448,7 +451,7 @@ export class AllPosts extends Component {
       if (this.state.search === "") {
         return <div>Search Input Here</div>;
       }
-      console.log(this.state.posts)
+      console.log(this.state.posts);
       let filtredPosts = this.state.posts.items.filter(currentPost => {
         return (
           currentPost.title

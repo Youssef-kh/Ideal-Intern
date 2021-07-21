@@ -6,8 +6,8 @@ import { followUser } from "../../../appRedux/actions/Auth";
 
 const profilebyIDheader = ({ company }) => {
   const { user, social } = company;
-    //const user = company.user;
-  console.log("aazeaeaze");
+  //const user = company.user;
+
   console.log(company);
   return (
     <div className="gx-profile-banner">
@@ -87,8 +87,8 @@ const profilebyIDheader = ({ company }) => {
   );
 };
 const mapStateToProps = state => ({
-     auth: state.auth,
-     company: state.company,
-     social: state.company.company.social
+  auth: state.auth,
+  company: state.company,
+  social: state.company.company.social
 });
 export default connect(null, { followUser })(profilebyIDheader);
